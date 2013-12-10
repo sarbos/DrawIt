@@ -1,5 +1,7 @@
 DrawIt
 ======
+We are going to just put basic test code here, and make another brand new repo for the actual competition code.
+
 LED Wristbands with 3 main functions
 
 1. Software Simulated Light Graffiti
