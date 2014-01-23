@@ -30,128 +30,79 @@ void setup()
   song.play();
   //noStroke();
   
-  //myPort = new Serial(this,"COM4",9600);
+  myPort = new Serial(this,"COM4",9600);
+  myPort.bufferUntil('\n');
 }
 void draw()
 {
-  //size(501,100);
-  //background(0,0,0);
   rect(0,0,100,100);
   rect(100,0,100,100);
   rect(200,0,100,100);
   rect(300,0,100,100);
   rect(400,0,100,100);
   rect(500,0,100,100);
-  
-  boolean kick = beat.isKick();
-  boolean hat = beat.isHat();
-  boolean snare = beat.isSnare();
-  ArrayList colors = new ArrayList();
-  //color col = color(255,random(100),random(255));
-  if(kick)
-  {
-    //color col = color(random(100),random(255),255);
-//fill(col);
-  }
-  if(snare)
-  {
-    //color col = color(255,random(100),random(255));
-    //fill(col);
-  }
-  if(hat)
-  {
-    //colorMode(HSB, 360, 100, 100);
-    //color col = color(random(180),76,91);
-    //color col = color(random(10),random(5),random(2));
-    //color col = color(random(100),random(255),255);
-    //fill(col);
-    //fill(color(0,0,255));
-  }
-  int h=180;
+
+  int h=360;
   int s=100;
   int b=0;
   colorMode(HSB,360,100,8);
-  int r=0;
-  int g=0;
-//  int b=0;
-  Color jCol = new Color(0,0,0);
+  
   if(beat.isRange(1,5,1))
   {
-    //color col = color(h,s,80);
-    //color col = color(h,s,b+4);
+    color col = color(h,s,b+4);
+    colorMode(RGB);
+    fill(red(col),green(col),blue(col));
+    send(red(col),green(col),blue(col));
     
-    //int coli=jCol.HSBtoRGB(h,s,b);
-    convertColor(jCol, h, s, b+4);
-    send(h, s, 100);
   }
   if(beat.isRange(6,9,1))
   {
-    //color col = color(h,s,b+5);
-    convertColor(jCol, h, s, b+5);
-    send(h, s, 100);
+    color col = color(h,s,b+5);    
+    colorMode(RGB);
+    fill(red(col),green(col),blue(col));
+    send(red(col),green(col),blue(col));
   }
   if(beat.isRange(10,15,1))
   {
-    //color col = color(h,s,b+6);
-    convertColor(jCol, h, s, b+6);
-    send(h, s, 100);
+    color col = color(h,s,b+6);
+    colorMode(RGB);
+    fill(red(col),green(col),blue(col));
+    send(red(col),green(col),blue(col));
   }
   if(beat.isRange(16,20,1))
   {
-    //color col = color(h,s,b+7);
-    convertColor(jCol, h, s, b+7);
-    send(h, s, 100);
+    color col = color(h,s,b+7);
+    colorMode(RGB);
+    fill(red(col),green(col),blue(col));
+    send(red(col),green(col),blue(col));
   }
-  if(beat.isRange(20,26,1))
+  if(beat.isRange(21,26,1))
   {
-    //color col = color(h,s,b+8);
-    convertColor(jCol, h, s, b+8);
-    send(int(random(255)),int(random(255)),int(random(255)));
+    color col = color(h,s,b+8);
+    colorMode(RGB);
+    fill(red(col),green(col),blue(col));
+    send(red(col),green(col),blue(col));
   }
   
 }
 
-void convertColor(Color jCol, int h, int s, int b)
-{
-    Color hsbCol=jCol.getHSBColor(h,s,b);
-    colorMode(RGB);
-    color col = color(hsbCol.getRed(),hsbCol.getBlue(),hsbCol.getGreen());
-    fill(col);
-}
 
-void send(int h, int s, int v)
+void send(float r, float g, float b)
 {
-  /*
-    //int colb = Color.HSBtoRGB(h, s, v);
-    //color col = HSL2RGB((float)h, (float)s / 100f, (float)v / 100f);
-    //byte r = byte(red(col));
-    //byte g = byte(green(col));
-    //byte b = byte(blue(col));
-    byte r=byte(0);
-    byte g=byte(0);
-    byte b=byte(255);
-    if(myPort.available()>0) a=myPort.read()=='a';
+    if(myPort.available()>0) a=myPort.read()==97;
     if(a)
     {
-      myPort.write(byte(0x7f));
+      
+      println(myPort.readString());
+      myPort.write(byte(0xa5));
+      myPort.write(byte(0xff));
       print(hex(byte(0x7f)));
-      println("(" + hex(r) + ", " + hex(g) + ", " + hex(b) + ")");
-      myPort.write(r);
-      myPort.write(g);
-      myPort.write(b);
+      println("(" + int(r) + ", " + int(g) + ", " + int(b) + ")");
+      myPort.write(byte(int(r)));
+      myPort.write(byte(int(g)));
+      myPort.write(byte(int(b)));
       a=false;
-      delay(700);
-      //colorMode(RGB);
-    //fill(col);
-    //delay(150);
     }
-    //colorMode(RGB);
-    //fill(col2);
-    
-    
-    
-    //color col = color(h,s,v);
-    //fill(col);*/
 }
 
 void stop()
